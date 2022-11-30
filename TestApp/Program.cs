@@ -3,7 +3,8 @@
 using (var dbContext = new MyDbContext())
 {
     dbContext.Database.EnsureDeleted();
-    dbContext.Database.EnsureCreated();
+    //dbContext.Database.EnsureCreated();
+    dbContext.Database.Migrate();
 
     var taskA = new TaskA { Name = "Task A", RandomProp = 123, TaskAProp = 2 };
     var taskB = new TaskB { Name = "Task B", RandomProp = 424, TaskBProp = 415 };
