@@ -6,10 +6,12 @@ using (var dbContext = new MyDbContext())
     dbContext.Database.EnsureCreated();
 
     var taskA = new TaskA { Name = "Task A", RandomProp = 123, TaskAProp = 2 };
-    var taskB = new TaskB { Name = "Task B", RandomProp = 123, TaskBProp = 415 };
+    var taskB = new TaskB { Name = "Task B", RandomProp = 424, TaskBProp = 415 };
+    var taskC = new TaskC { Name = "Task C", RandomProp = 3, RandomProp2= 535, TaskCProp = 415 };
 
     dbContext.Tasks.Add(taskA);
     dbContext.Tasks.Add(taskB);
+    dbContext.Tasks.Add(taskC);
 
     dbContext.SaveChanges();
 
@@ -27,7 +29,8 @@ public class MyDbContext : DbContext
         modelBuilder.Entity<TaskBase>()
             .HasDiscriminator<string>("task_type")
             .HasValue<TaskA>("a")
-            .HasValue<TaskB>("b");
+            .HasValue<TaskB>("b")
+            .HasValue<TaskC>("c");
 
         base.OnModelCreating(modelBuilder);
     }
@@ -57,4 +60,11 @@ public class TaskB : TaskBase
 {
     public int RandomProp { get; set; }
     public int TaskBProp { get; set; }
+}
+
+public class TaskC : TaskBase
+{
+    public int RandomProp { get; set; }
+    public int RandomProp2 { get; set; }
+    public int TaskCProp { get; set; }
 }
